@@ -14,6 +14,8 @@ var tempChannel = new SseChannel({
   }
 })
 
+var multiplier = 1000*60
+
 var server = http.createServer(function requestHandler (req, res) {
   switch (req.url) {
     case '/':
@@ -40,10 +42,10 @@ var server = http.createServer(function requestHandler (req, res) {
             return console.log(e)
           }
 
-          var currentMinute = Math.floor(data.when/(1000*60*60))
+          var currentMinute = Math.floor(data.when/multiplier)
           if (minute && currentMinute > minute) {
             var payload = JSON.stringify({
-              when: minute*60*1000*60,
+              when: minute*multiplier,
               temperature: total/points
             })
             this.queue(payload + '\n')
@@ -72,6 +74,6 @@ server.listen(3000, function () {
 var ft = tail.startTailing('./log.json')
 
 ft.on('line', function (line) {
-  tempChannel.send(line)
+  // tempChannel.send(line)
 })
 

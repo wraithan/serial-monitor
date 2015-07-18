@@ -1,0 +1,2 @@
+require('./watcher')
+require('./index')

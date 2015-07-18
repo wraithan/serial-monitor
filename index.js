@@ -17,7 +17,7 @@ function addDevices (event) {
     }
 
     devices.forEach(function (device) {
-      if (device.comName.indexOf('/dev/cu.usbmodem') === 0) {
+      if (device.comName.indexOf('/dev/cu.usbmodem') === 0 || device.comName.indexOf('/dev/ttyACM') === 0) {
         if (!listeners[device.comName]) {
           listeners[device.comName] = listenTo(device.comName)
         }
